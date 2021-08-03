@@ -1,0 +1,28 @@
+package com.example.relacionesentretablas.student.infrastructure.controller.dto.output;
+
+import com.example.relacionesentretablas.alumnos_estudios.infrastructure.controller.dto.output.Alumnos_EstudiosDTOOutputSimple;
+import com.example.relacionesentretablas.persona.domain.IPersona;
+import com.example.relacionesentretablas.persona.infrastructure.controller.dto.output.PersonaDTOOutput;
+import com.example.relacionesentretablas.profesor.infrastructure.controller.dto.output.ProfesorDTOOutputSimple;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class StudentDTOOutput implements IPersona {
+
+    Integer id_student;
+    PersonaDTOOutput persona;
+    Integer num_hours_week;
+    String coments;
+    ProfesorDTOOutputSimple profesor;
+    String branch;
+    List<Alumnos_EstudiosDTOOutputSimple> estudios;
+
+}
