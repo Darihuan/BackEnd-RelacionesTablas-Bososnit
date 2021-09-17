@@ -27,6 +27,7 @@ public class PersonaDTOOutput implements IPersona {
         setCreated_Date(persona.getCreated_Date());
         setImagen_url(persona.getImagen_url());
         setTermination_Date(persona.getTermination_Date());
+        setAdmin(persona.getAdmin());
     }
 
     Integer id;
@@ -40,6 +41,7 @@ public class PersonaDTOOutput implements IPersona {
     Date created_Date;
     String imagen_url;
     Date termination_Date;
+    Boolean admin;
 
 
 }

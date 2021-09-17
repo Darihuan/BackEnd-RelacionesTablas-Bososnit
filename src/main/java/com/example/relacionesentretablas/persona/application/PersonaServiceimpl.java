@@ -10,6 +10,10 @@ import com.example.relacionesentretablas.persona.infrastructure.repository.IPers
 import com.example.relacionesentretablas.profesor.infrastructure.repository.ProfesorRepository;
 import com.example.relacionesentretablas.student.infrastructure.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonaServiceimpl implements IPersonaService {
+public class PersonaServiceimpl implements IPersonaService, UserDetailsService {
     @Autowired
     IPersonaRepository repositorio;
     @Autowired
@@ -28,7 +32,14 @@ public class PersonaServiceimpl implements IPersonaService {
     @Autowired
     AuxMapper mapper;
 
+    @Override
+    public UserDetails loadUserByUsername(String user) throws UsernameNotFoundException {
+        Persona persona = repositorio.findByUser(user).orElseThrow(()->new NotFoundException("No existe user:"+user));
+        String permiso = persona.getAdmin()?"Admin":"User";
 
+//corregir
+        return new User(persona.getUser(),persona.getPassword(),new ArrayList<>());
+    }
     @Override
     @Transactional
     public IPersona findpersonabyID(Integer id) {
@@ -106,4 +117,6 @@ public class PersonaServiceimpl implements IPersonaService {
         Persona borrado = repositorio.findById(id).orElseThrow(() -> new NotFoundException("no existe elemento con id:" + id + " para ser borrado"));
         repositorio.deleteById(id);
     }
+
+
 }

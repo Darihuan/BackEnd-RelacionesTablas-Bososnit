@@ -20,7 +20,7 @@ public class Persona {
     @Column(name = "id_persona")
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
-    @Column(name = "user", nullable = false)
+    @Column(name = "user", nullable = false, unique = true)
     String user;
     @Column(name = "password", nullable = false)
     String password;
@@ -41,6 +41,8 @@ public class Persona {
     String imagen_url;
     @Column(name = "termination_date")
     Date termination_Date;
+    @Column(name = "admin", nullable = false)
+    Boolean admin;
 
     public Persona(PersonaDTOInput personaDTO) {
         setId(personaDTO.getId());
@@ -54,5 +56,7 @@ public class Persona {
         setCreated_Date(personaDTO.getCreated_Date());
         setImagen_url(personaDTO.getImagen_url());
         setTermination_Date(personaDTO.getTermination_Date());
+        setAdmin(personaDTO.getAdmin());
+
     }
 }

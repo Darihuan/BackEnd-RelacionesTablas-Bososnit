@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ public class PersonaDTOInput {
 
     Integer id;
     @UsuarioValidationAnotation
+    @UniqueElements
     String user;
 
     @NotNulllvalidationAnotation(message = "el campo password no puede ser nulo")
@@ -40,6 +42,8 @@ public class PersonaDTOInput {
     Date created_Date;
     String imagen_url;
     Date termination_Date;
+    @NotNulllvalidationAnotation
+    Boolean admin;
 
 
 }
