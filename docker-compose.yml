@@ -1,0 +1,22 @@
+version: '3'
+services:
+  docker-mysql:
+    restart: always
+    container_name : docker-mysql
+    image: mysql
+    environment:
+      MYSQL_DATABASE : relacionestablas
+      MYSQL_ROOT_PASSWORD : password
+    volumes:
+      - ./sql:/docker-entrypont-initdb.d
+    ports:
+      - "3306:3306"
+
+  seguridad-app:
+      build: ./
+      expose:
+        - 8080
+      ports:
+        - "8080:8080"
+      depends_on:
+        - docker-mysql
