@@ -8,9 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
@@ -25,11 +28,13 @@ public class RelacionesEntreTablasApplication {
         SpringApplication.run(RelacionesEntreTablasApplication.class, args);
     }
 
-
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 
     @PostConstruct
-    public void iniciando()
-    {
+    public void iniciando() {
 
     }
 
@@ -42,7 +47,6 @@ public class RelacionesEntreTablasApplication {
         restTemplate.setInterceptors(interceptors);
         return restTemplate;
     }
-
 
 
 }

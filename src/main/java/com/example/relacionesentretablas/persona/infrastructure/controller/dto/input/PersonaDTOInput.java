@@ -23,7 +23,6 @@ public class PersonaDTOInput {
 
     Integer id;
     @UsuarioValidationAnotation
-    @UniqueElements
     String user;
 
     @NotNulllvalidationAnotation(message = "el campo password no puede ser nulo")
@@ -42,7 +41,7 @@ public class PersonaDTOInput {
     Date created_Date;
     String imagen_url;
     Date termination_Date;
-    @NotNulllvalidationAnotation
+    @NotNull
     Boolean admin;
 
 

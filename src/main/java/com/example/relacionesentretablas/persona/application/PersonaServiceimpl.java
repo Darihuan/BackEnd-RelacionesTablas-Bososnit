@@ -10,6 +10,7 @@ import com.example.relacionesentretablas.persona.infrastructure.repository.IPers
 import com.example.relacionesentretablas.profesor.infrastructure.repository.ProfesorRepository;
 import com.example.relacionesentretablas.student.infrastructure.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +18,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +38,26 @@ public class PersonaServiceimpl implements IPersonaService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String user) throws UsernameNotFoundException {
         Persona persona = repositorio.findByUser(user).orElseThrow(()->new NotFoundException("No existe user:"+user));
-        String permiso = persona.getAdmin()?"Admin":"User";
+      String permiso = persona.getAdmin()?"ADMIN":"USER";
+      List<GrantedAuthority> rol = new ArrayList<>();
+      if(permiso.equals("ADMIN")) {
+          rol.add(new GrantedAuthority() {
+              @Override
+              public String getAuthority() {
+                  return "ADMIN";
+              }
+          });
+      }
+      else if (permiso.equals("USER")) {
+          rol.add(new GrantedAuthority() {
+              @Override
+              public String getAuthority() {
+                  return "USER";
+              }
+          });
+      }
 
-//corregir
-        return new User(persona.getUser(),persona.getPassword(),new ArrayList<>());
+        return new User(persona.getUser(),persona.getPassword(),rol);
     }
     @Override
     @Transactional
